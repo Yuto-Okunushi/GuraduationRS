@@ -47,12 +47,12 @@ TagManager:
   - name: Objects1
     uniqueID: 2627654437
     locked: 0
-  - name: Objects2
-    uniqueID: 2081894341
-    locked: 0
   - name: Objects3
     uniqueID: 2823012049
     locked: 0
   - name: Charactor
     uniqueID: 2512921861
+    locked: 0
+  - name: Objects2
+    uniqueID: 2081894341
     locked: 0
