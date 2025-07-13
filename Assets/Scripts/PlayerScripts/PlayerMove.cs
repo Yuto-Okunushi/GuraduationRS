@@ -1,20 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-
     public float moveSpeed = 5f;
     public float gridSize = 1f;
     private bool isMoving = false;
     private Vector2 input;
-    private Vector3 targetPos;
+    private Vector3 lastDirection = Vector3.down;
 
-    public LayerMask obstacleLayer;  // 障害物のレイヤー指定
+    public LayerMask obstacleLayer;
+    public LayerMask mobLayer;
+    public CSVDialogueReader dialogueReader;
 
     void Update()
     {
+        // 会話中は移動も話しかけも無効
+        if (dialogueReader.IsDialogueActive())
+            return;
+
+        // 話しかけ処理（Enter または クリック）
+        if (!isMoving && (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)))
+        {
+            TryTalkToMob();
+            return; // ← 進行処理と分離
+        }
+
+        // 移動処理
         if (!isMoving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
@@ -24,10 +36,9 @@ public class PlayerMove : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                Vector3 direction = new Vector3(input.x, input.y, 0);
-                Vector3 destination = transform.position + direction * gridSize;
+                lastDirection = new Vector3(input.x, input.y, 0);
+                Vector3 destination = transform.position + lastDirection * gridSize;
 
-                // ★ 障害物があるかチェック（BoxCastまたはRaycastで調整可）
                 if (!IsBlocked(destination))
                 {
                     StartCoroutine(Move(destination));
@@ -36,7 +47,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator Move(Vector3 destination)
+    IEnumerator Move(Vector3 destination)
     {
         isMoving = true;
 
@@ -50,12 +61,23 @@ public class PlayerMove : MonoBehaviour
         isMoving = false;
     }
 
-    // ★ 障害物の確認（小さめのBoxCastを使用）
     bool IsBlocked(Vector3 destination)
     {
-        Vector2 center = destination;
-        float boxSize = gridSize * 0.4f;
+        return Physics2D.OverlapBox(destination, new Vector2(0.9f, 0.9f), 0f, obstacleLayer) != null;
+    }
 
-        return Physics2D.OverlapBox(center, new Vector2(boxSize, boxSize), 0f, obstacleLayer) != null;
+    void TryTalkToMob()
+    {
+        Vector3 checkPosition = transform.position + lastDirection * gridSize;
+        Collider2D mob = Physics2D.OverlapBox(checkPosition, new Vector2(1f, 1f), 0f, mobLayer);
+
+        if (mob != null)
+        {
+            MobTalkData data = mob.GetComponent<MobTalkData>();
+            if (data != null && dialogueReader != null)
+            {
+                dialogueReader.StartDialogueFrom(data.startRow, data.nameColumnIndex, data.messageColumnIndex);
+            }
+        }
     }
 }
