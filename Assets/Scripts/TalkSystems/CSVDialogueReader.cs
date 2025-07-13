@@ -14,9 +14,6 @@ public class CSVDialogueReader : MonoBehaviour
     private int currentIndex = 0;
     private bool isActive = false;
 
-    /// <summary>
-    /// 任意の行番号、列番号（キャラ名、会話内容）から会話を読み込む
-    /// </summary>
     public void StartDialogueFrom(int startRow, int nameColumnIndex, int messageColumnIndex)
     {
         dialogueLines.Clear();
@@ -31,12 +28,12 @@ public class CSVDialogueReader : MonoBehaviour
                 if (lineCount < startRow)
                 {
                     lineCount++;
-                    continue; // 指定行までスキップ
+                    continue;
                 }
 
                 if (string.IsNullOrWhiteSpace(line))
                 {
-                    dialogueLines.Add(("", "")); // 空行→終了条件
+                    dialogueLines.Add(("", ""));
                     continue;
                 }
 
