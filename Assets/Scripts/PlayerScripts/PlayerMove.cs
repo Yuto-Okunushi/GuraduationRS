@@ -69,14 +69,22 @@ public class PlayerMove : MonoBehaviour
     void TryTalkToMob()
     {
         Vector3 checkPosition = transform.position + lastDirection * gridSize;
-        Collider2D mob = Physics2D.OverlapBox(checkPosition, new Vector2(1f, 1f), 0f, mobLayer);
+        Collider2D mob = Physics2D.OverlapBox(checkPosition, new Vector2(0.9f, 0.9f), 0f, mobLayer);
 
         if (mob != null)
         {
             MobTalkData data = mob.GetComponent<MobTalkData>();
             if (data != null && dialogueReader != null)
             {
-                dialogueReader.StartDialogueFrom(data.startRow, data.nameColumnIndex, data.messageColumnIndex);
+                TalkTracker tracker = FindObjectOfType<TalkTracker>();
+
+                dialogueReader.StartDialogueFrom(
+                    data.startRow,
+                    data.nameColumnIndex,
+                    data.messageColumnIndex,
+                    data.characterName,
+                    tracker
+                );
             }
         }
     }

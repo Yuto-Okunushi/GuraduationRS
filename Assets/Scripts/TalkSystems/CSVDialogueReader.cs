@@ -14,7 +14,30 @@ public class CSVDialogueReader : MonoBehaviour
     private int currentIndex = 0;
     private bool isActive = false;
 
-    public void StartDialogueFrom(int startRow, int nameColumnIndex, int messageColumnIndex)
+    private bool inputLocked = false;
+    private string currentTalkCharacterName = "";
+    private TalkTracker talkTracker;
+
+    void Update()
+    {
+        if (!isActive) return;
+
+        // エンターキーまたはマウスクリックで次のセリフへ
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && !inputLocked)
+        {
+            Next();
+            //inputLocked = true;
+        }
+
+        // キー/クリックを離したらロック解除（押しっぱなし対策）
+        if (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonUp(0))
+        {
+            //inputLocked = false;
+        }
+    }
+
+
+    public void StartDialogueFrom(int startRow, int nameColumnIndex, int messageColumnIndex, string characterName = "", TalkTracker tracker = null)
     {
         dialogueLines.Clear();
 
@@ -47,23 +70,21 @@ public class CSVDialogueReader : MonoBehaviour
             }
         }
 
-        if (dialogueLines.Count == 0)
-        {
-            Debug.LogWarning("読み込まれた会話データが空です。");
-            return;
-        }
-
         currentIndex = 0;
         isActive = true;
+        inputLocked = true; // 最初のクリックをスキップする場合true
         dialoguePanel.SetActive(true);
+
+        currentTalkCharacterName = characterName;
+        talkTracker = tracker;
+
         ShowCurrentLine();
     }
 
     public void Next()
     {
-        if (!isActive) return;
-
         currentIndex++;
+
         if (currentIndex >= dialogueLines.Count)
         {
             EndDialogue();
@@ -71,6 +92,7 @@ public class CSVDialogueReader : MonoBehaviour
         }
 
         var (name, message) = dialogueLines[currentIndex];
+
         if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(message))
         {
             EndDialogue();
@@ -91,6 +113,11 @@ public class CSVDialogueReader : MonoBehaviour
     {
         isActive = false;
         dialoguePanel.SetActive(false);
+
+        if (talkTracker != null && !string.IsNullOrEmpty(currentTalkCharacterName))
+        {
+            talkTracker.OnDialogueFinished(currentTalkCharacterName);
+        }
     }
 
     public bool IsDialogueActive()
