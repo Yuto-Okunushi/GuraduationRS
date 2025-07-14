@@ -304,7 +304,6 @@ MonoBehaviour:
   startRow: 18
   nameColumnIndex: 1
   messageColumnIndex: 3
-  characterName: Yukidaruma1
 --- !u!1839735485 &24531426
 Tilemap:
   m_ObjectHideFlags: 0
@@ -2092,7 +2091,6 @@ MonoBehaviour:
   startRow: 11
   nameColumnIndex: 1
   messageColumnIndex: 3
-  characterName: Tonakai
 --- !u!1839735485 &792370000
 Tilemap:
   m_ObjectHideFlags: 0
@@ -2749,7 +2747,6 @@ MonoBehaviour:
   startRow: 18
   nameColumnIndex: 8
   messageColumnIndex: 10
-  characterName: Yukidaruma2
 --- !u!1839735485 &1059572324
 Tilemap:
   m_ObjectHideFlags: 0
@@ -2860,61 +2857,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1069058789
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1069058791}
-  - component: {fileID: 1069058790}
-  m_Layer: 0
-  m_Name: TalkTracker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1069058790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069058789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d742e93e9388a664d839fc84112987d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterNames:
-  - Santa1
-  - Santa2
-  - Yukidaruma1
-  - Yukidaruma2
-  - Tonakai
-  dialogueReader: {fileID: 452035275}
-  nextCsv: {fileID: 4900000, guid: 2e840a764418d784d95b21c99094af8f, type: 3}
-  nextStartRow: 2
-  nameCol: 14
-  messageCol: 15
---- !u!4 &1069058791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069058789}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 102.24741, y: 910.8955, z: -4.314778}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1131658093
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,7 +4049,6 @@ MonoBehaviour:
   startRow: 11
   nameColumnIndex: 16
   messageColumnIndex: 17
-  characterName: Santa2
 --- !u!1839735485 &1461088930
 Tilemap:
   m_ObjectHideFlags: 0
@@ -6479,7 +6420,6 @@ MonoBehaviour:
   startRow: 11
   nameColumnIndex: 9
   messageColumnIndex: 10
-  characterName: Santa1
 --- !u!1839735485 &2031589241
 Tilemap:
   m_ObjectHideFlags: 0
@@ -9266,5 +9206,4 @@ SceneRoots:
   - {fileID: 475709630}
   - {fileID: 452035276}
   - {fileID: 1988707996}
-  - {fileID: 1069058791}
   - {fileID: 797320686}

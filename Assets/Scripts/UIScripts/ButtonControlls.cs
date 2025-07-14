@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class ButtonControlls : MonoBehaviour
 {
@@ -33,6 +35,8 @@ public class ButtonControlls : MonoBehaviour
     {
         ChoosePanel.SetActive(false);
         CheckPanel.SetActive(false);
+        SceneManager.LoadScene("Game1");
+
     }
 
     public void PushNo()
