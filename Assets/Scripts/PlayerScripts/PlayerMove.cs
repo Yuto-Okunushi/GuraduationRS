@@ -4,35 +4,48 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float gridSize = 1f;
-    private bool isMoving = false;
-    private Vector2 input;
-    private Vector3 lastDirection = Vector3.down;
-
     public LayerMask obstacleLayer;
     public LayerMask mobLayer;
+    public float gridSize = 1f;
+    public GameObject SmartPhonePanel;
     public CSVDialogueReader dialogueReader;
+
+    private Vector2 input;
+    private bool isMoving;
+    private bool isPaneOpen;
+    private Vector3 lastDirection = Vector3.down;
+    public GameObject ChatPanel;
 
     void Update()
     {
-        // 会話中は移動も話しかけも無効
-        if (dialogueReader.IsDialogueActive())
+        // スマホパネルが表示中か確認
+        isPaneOpen = SmartPhonePanel.activeSelf;
+
+        // スマホの開閉：Eキーでトグル
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SmartPhonePanel.SetActive(!SmartPhonePanel.activeSelf);
+            return;
+        }
+
+        // スマホ or 会話中はプレイヤー操作不可
+        if (isPaneOpen || dialogueReader.IsDialogueActive())
             return;
 
-        // 話しかけ処理（Enter または クリック）
+        // 話しかけ処理（エンター or クリック）
         if (!isMoving && (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)))
         {
             TryTalkToMob();
-            return; // ← 進行処理と分離
+            return;
         }
 
-        // 移動処理
+        // プレイヤー移動処理
         if (!isMoving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
 
-            if (input.x != 0) input.y = 0;
+            if (input.x != 0) input.y = 0; // 十字方向のみ
 
             if (input != Vector2.zero)
             {
@@ -51,7 +64,7 @@ public class PlayerMove : MonoBehaviour
     {
         isMoving = true;
 
-        while ((destination - transform.position).sqrMagnitude > Mathf.Epsilon)
+        while ((destination - transform.position).sqrMagnitude > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
             yield return null;
@@ -63,7 +76,8 @@ public class PlayerMove : MonoBehaviour
 
     bool IsBlocked(Vector3 destination)
     {
-        return Physics2D.OverlapBox(destination, new Vector2(0.9f, 0.9f), 0f, obstacleLayer) != null;
+        Collider2D hit = Physics2D.OverlapCircle(destination, 0.2f, obstacleLayer);
+        return hit != null;
     }
 
     void TryTalkToMob()
@@ -87,5 +101,15 @@ public class PlayerMove : MonoBehaviour
                 );
             }
         }
+    }
+
+    public void OpenChatPanel()
+    {
+        ChatPanel.SetActive(true);
+    }
+
+    public void CloseSmartPhonePanel()
+    {
+        ChatPanel.SetActive(false);
     }
 }
