@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -18,24 +18,61 @@ public class CSVDialogueReader : MonoBehaviour
     private string currentTalkCharacterName = "";
     private TalkTracker talkTracker;
 
+    // ======================================================
+    //   ä¿®æ­£ç‰ˆï¼šCSV ã® 1 è¡Œã‚’å®‰å…¨ã«è§£æã™ã‚‹ãƒ‘ãƒ¼ã‚µãƒ¼
+    // ======================================================
+    private List<string> ParseCsvLine(string line)
+    {
+        List<string> result = new List<string>();
+        bool inQuotes = false;
+        string value = "";
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+
+            if (c == '\"')
+            {
+                // "" â†’ " ã¨ã—ã¦æ‰±ã†
+                if (inQuotes && i + 1 < line.Length && line[i + 1] == '\"')
+                {
+                    value += '\"';
+                    i++; // 1æ–‡å­—ã‚¹ã‚­ãƒƒãƒ—
+                }
+                else
+                {
+                    inQuotes = !inQuotes;
+                }
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                result.Add(value);
+                value = "";
+            }
+            else
+            {
+                value += c;
+            }
+        }
+
+        result.Add(value);
+        return result;
+    }
+
     void Update()
     {
         if (!isActive) return;
 
-        // ƒGƒ“ƒ^[ƒL[‚Ü‚½‚Íƒ}ƒEƒXƒNƒŠƒbƒN‚ÅŸ‚ÌƒZƒŠƒt‚Ö
         if ((Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && !inputLocked)
         {
             Next();
-            //inputLocked = true;
         }
 
-        // ƒL[/ƒNƒŠƒbƒN‚ğ—£‚µ‚½‚çƒƒbƒN‰ğœi‰Ÿ‚µ‚Á‚Ï‚È‚µ‘Îôj
         if (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonUp(0))
         {
             //inputLocked = false;
         }
     }
-
 
     public void StartDialogueFrom(int startRow, int nameColumnIndex, int messageColumnIndex, string characterName = "", TalkTracker tracker = null)
     {
@@ -46,7 +83,7 @@ public class CSVDialogueReader : MonoBehaviour
             int lineCount = 0;
             while (reader.Peek() > -1)
             {
-                string line = reader.ReadLine();
+                string rawLine = reader.ReadLine();
 
                 if (lineCount < startRow)
                 {
@@ -54,16 +91,18 @@ public class CSVDialogueReader : MonoBehaviour
                     continue;
                 }
 
-                if (string.IsNullOrWhiteSpace(line))
+                if (string.IsNullOrWhiteSpace(rawLine))
                 {
                     dialogueLines.Add(("", ""));
+                    lineCount++;
                     continue;
                 }
 
-                string[] parts = line.Split(',');
+                // ğŸ”¥ ä¿®æ­£ç‰ˆãƒ‘ãƒ¼ã‚µãƒ¼ã§è§£æ
+                var parts = ParseCsvLine(rawLine);
 
-                string name = nameColumnIndex < parts.Length ? parts[nameColumnIndex].Trim() : "";
-                string message = messageColumnIndex < parts.Length ? parts[messageColumnIndex].Trim() : "";
+                string name = nameColumnIndex < parts.Count ? parts[nameColumnIndex].Trim() : "";
+                string message = messageColumnIndex < parts.Count ? parts[messageColumnIndex].Trim() : "";
 
                 dialogueLines.Add((name, message));
                 lineCount++;
@@ -72,7 +111,7 @@ public class CSVDialogueReader : MonoBehaviour
 
         currentIndex = 0;
         isActive = true;
-        inputLocked = true; // Å‰‚ÌƒNƒŠƒbƒN‚ğƒXƒLƒbƒv‚·‚éê‡true
+        inputLocked = true;
         dialoguePanel.SetActive(true);
 
         currentTalkCharacterName = characterName;
