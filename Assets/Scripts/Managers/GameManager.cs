@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     // ゲームマネージャー内メンバー変数
 
     // ストーリー分岐、最終評価に使われるパラメーター
-    int storyParameter = 0;
+    public int storyParameter = 0;
+    // ストーリー分岐で使用されるパラメーターに新しく足される変数
+    public int addParameter = 0;
 
     // 選択肢で使われる数値達
     int kenin = 0;
@@ -37,9 +39,16 @@ public class GameManager : MonoBehaviour
 
 
     //==Getter====================================================================
-
+    static public int GetParameter()
+    {
+        // ストーリーパラメータの取得
+        return instance.storyParameter;
+    }
     
     //==Setter==========================================================================
-
+    static public void SetParameter(int value)
+    {
+        instance.addParameter = value;
+    }
     
 }
