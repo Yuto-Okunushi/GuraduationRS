@@ -10,19 +10,14 @@ public class GameManager : MonoBehaviour
 
     // ゲームマネージャー内メンバー変数
 
-    // ストーリー分岐、最終評価に使われるパラメーター
-    public int storyParameter = 0;
+    // シーン遷移で使われる数値
+    public int sceneChamgeNum = 0;
+
     // ストーリー分岐で使用されるパラメーターに新しく足される変数
     public int addParameter = 0;
 
-    // 選択肢で使われる数値達
-    int kenin = 0;
-    int kouryo = 0;
-    int taiou = 0;
-    int henkaku = 0;
-    int ronri = 0;
-    int zikogisei = 0;
-    int ikusei = 0;
+    // 一時的に数値を保持する変数
+    public int setAddParameter = 0;
 
     private void Awake()
     {
@@ -42,13 +37,33 @@ public class GameManager : MonoBehaviour
     static public int GetParameter()
     {
         // ストーリーパラメータの取得
-        return instance.storyParameter;
+        return instance.addParameter;
+    }
+
+    static public int GetAddParameter()
+    {
+        return instance.setAddParameter;
+    }
+
+    static public int GetNowSceneNum()
+    {
+        return instance.sceneChamgeNum;
     }
     
     //==Setter==========================================================================
     static public void SetParameter(int value)
     {
         instance.addParameter = value;
+    }
+
+    static public void SetAddParameter(int value)
+    {
+        instance.setAddParameter = value;
+    }
+
+    static public void SetNowSceneNum(int value)
+    {
+        instance.sceneChamgeNum = value;
     }
     
 }

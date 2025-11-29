@@ -12,12 +12,30 @@ EditorBuildSettings:
     path: Assets/Scenes/EndScene.unity
     guid: 13ef96743e13ca74c9a949aa8e582a48
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/Day1.unity
     guid: e5dbd3c2a37450c44bb1bee390ee1a3c
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: 9797d16939c426d4f81ba9da721a5e2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game1.unity
     guid: 7268ef0a0b592134ca116c03e08146be
+  - enabled: 1
+    path: Assets/Scenes/Day2.unity
+    guid: 477399b00328104439a6c356dc762aac
+  - enabled: 1
+    path: Assets/Scenes/Day3.unity
+    guid: cda9b85a43e5ee549972e5337ee29ffd
+  - enabled: 1
+    path: Assets/Scenes/Day4.unity
+    guid: 15c5509cb9dec4447b7268f44cebc2fc
+  - enabled: 1
+    path: Assets/Scenes/Day5.unity
+    guid: a873a9517930d5149ada99b4765c570f
+  - enabled: 1
+    path: Assets/Scenes/Day6.unity
+    guid: 380c4160c1c684f4faf10355b1085142
+  - enabled: 1
+    path: Assets/Scenes/Day7.unity
+    guid: 174ff63bfa893de49885bee12fadb074
   m_configObjects: {}
