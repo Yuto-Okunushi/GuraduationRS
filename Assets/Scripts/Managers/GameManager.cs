@@ -11,13 +11,25 @@ public class GameManager : MonoBehaviour
     // ゲームマネージャー内メンバー変数
 
     // シーン遷移で使われる数値
+    [Header("シーン遷移で使われる数値")]
     public int sceneChamgeNum = 0;
 
     // ストーリー分岐で使用されるパラメーターに新しく足される変数
+    [Header("ストーリー分岐で使用されるパラメーターに新しく足される変数")]
     public int addParameter = 0;
 
     // 一時的に数値を保持する変数
+    [Header("一時的に数値を保持する変数")]
     public int setAddParameter = 0;
+    public int setCSVRow = 0;
+    public int setCSVnameColumnIndex = 0;
+    public int setCSVmessageColumnIndex = 0;
+
+    // リアクションを再生するCSV設定数値
+    [Header("リアクションを再生するCSV設定数値")]
+    public int CSVRow = 0;
+    public int CSVnameColumnIndex = 0;
+    public int CSVmessageColumnIndex = 0;
 
     private void Awake()
     {
@@ -49,7 +61,22 @@ public class GameManager : MonoBehaviour
     {
         return instance.sceneChamgeNum;
     }
-    
+
+    static public int GetCSVRow()
+    {
+        return instance.setCSVRow;
+    }
+
+    static public int GetCSVnameColumnIndex()
+    {
+        return instance.setCSVnameColumnIndex;
+    }
+
+    static public int GetCSVmessageColumnIndex()
+    {
+        return instance.setCSVmessageColumnIndex;
+    }
+
     //==Setter==========================================================================
     static public void SetParameter(int value)
     {
@@ -65,5 +92,21 @@ public class GameManager : MonoBehaviour
     {
         instance.sceneChamgeNum = value;
     }
-    
+
+    static public void SetCSVRow(int value)
+    {
+        instance.setCSVRow = value;
+    }
+
+    static public void SetCSVnameColumnIndex(int value)
+    {
+        instance.setCSVnameColumnIndex = value;
+    }
+
+    static public void SetCSVmessageColumnIndex(int value)
+    {
+        instance.setCSVmessageColumnIndex = value;
+    }
+
+
 }
