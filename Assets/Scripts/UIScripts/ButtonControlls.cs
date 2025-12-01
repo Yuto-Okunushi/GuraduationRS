@@ -205,19 +205,25 @@ public class ButtonControlls : MonoBehaviour
         // ƒV[ƒ“‘JˆÚ
         switch (NowSceneChangeNum)
         {
-            case 1: SceneManager.LoadScene("Day2"); break;
-            case 2: SceneManager.LoadScene("Day3"); break;
-            case 3: SceneManager.LoadScene("Day4"); break;
-            case 4: SceneManager.LoadScene("Day5"); break;
-            case 5: SceneManager.LoadScene("Day6"); break;
-            case 6: SceneManager.LoadScene("Day7"); break;
-            case 7: SceneManager.LoadScene("Day8"); break;
-            case 8: SceneManager.LoadScene("Day9"); break;
+            case 0: SceneManager.LoadScene("Day1Gozen"); break;
+            case 1: SceneManager.LoadScene("Day1Gogo"); break;
+            case 2: SceneManager.LoadScene("Day2Gozen"); break;
+            case 3: SceneManager.LoadScene("Day3Gozen"); break;
+            case 4: SceneManager.LoadScene("Day3Gogo"); break;
+            case 5: SceneManager.LoadScene("Day4Gozen"); break;
+            case 6: SceneManager.LoadScene("Day4Gogo"); break;
+            case 7: SceneManager.LoadScene("Day5"); break;
+            case 8: SceneManager.LoadScene("Day6"); break;
 
             default:
                 NowSceneChangeNum = 0;
                 SceneManager.LoadScene("EndScene");
                 break;
         }
+    }
+
+    public void ArasuziNext()
+    {
+        SceneManager.LoadScene("Day1Gozen");
     }
 }

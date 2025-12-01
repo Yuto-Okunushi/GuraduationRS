@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dd58e3e4ebc454787e6645b5e93137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: GameScene
+  nextSceneName: Arasuzi
 --- !u!4 &1830752843
 Transform:
   m_ObjectHideFlags: 0
