@@ -211,6 +211,8 @@ public class ButtonControlls : MonoBehaviour
             case 4: SceneManager.LoadScene("Day5"); break;
             case 5: SceneManager.LoadScene("Day6"); break;
             case 6: SceneManager.LoadScene("Day7"); break;
+            case 7: SceneManager.LoadScene("Day8"); break;
+            case 8: SceneManager.LoadScene("Day9"); break;
 
             default:
                 NowSceneChangeNum = 0;
