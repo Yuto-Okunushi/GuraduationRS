@@ -8,6 +8,9 @@ public class ButtonControlls : MonoBehaviour
 {
     public GameObject ActionEndButton;
     public GameObject ChoosePanel;
+    public GameObject FadeInObuject;
+    public AudioClip Koukaon;
+    private AudioSource audioSource;
 
     [Header("表示パネル類")]
     public GameObject CheckPanel;
@@ -131,6 +134,13 @@ public class ButtonControlls : MonoBehaviour
         ChoosePanel.SetActive(false);
     }
 
+    public void PlayMusic()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = Koukaon;
+        audioSource.Play();
+    }
+
 
     //===========================================================
     // CSV読み取り開始
@@ -201,8 +211,17 @@ public class ButtonControlls : MonoBehaviour
     {
         isTalking = false;
         TalkPanel.SetActive(false);
+        FadeInObuject.SetActive(true);
+        
+    }
 
+    private void SceneChane()
+    {
+        isTalking = false;
+        TalkPanel.SetActive(false);
+        FadeInObuject.SetActive(true);
         // シーン遷移
+        NowSceneChangeNum = GameManager.GetNowSceneNum();
         switch (NowSceneChangeNum)
         {
             case 0: SceneManager.LoadScene("Day1Gozen"); break;
@@ -221,6 +240,7 @@ public class ButtonControlls : MonoBehaviour
                 break;
         }
     }
+
 
     public void ArasuziNext()
     {
